@@ -1,0 +1,43 @@
+name: COPR Autometion
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  changed_files:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: Test changed-files
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: Get all changed spec files
+        id: changed-spec-files
+        uses: tj-actions/changed-files@v44
+        with:
+          dir_names: true
+          files: |
+             **.spec
+
+      - name: List all changed files spec files
+        if: steps.changed-spec-files.outputs.any_changed == 'true'
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-spec-files.outputs.all_changed_files }}
+          ALL_CHANGED_AND_MODIFIED_FILES: ${{ steps.changed-spec-files.outputs.all_changed_and_modified_files }}
+          COPR_WEBHOOK: ${{ secrets.COPR_WEBHOOK }}
+
+        run: |
+          for FILE in ${ALL_CHANGED_AND_MODIFIED_FILES}; do
+            echo "Spec file $file was changed"
+            printf "${COPR_WEBHOOK}" "${FILE}" | xargs -r -I{} curl -X POST "{}"
+          done
