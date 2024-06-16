@@ -1,5 +1,5 @@
 Name:          step-cli
-Version:       0.26.1
+Version:       0.27.1
 Release:       1%{?dist}
 Summary:       A zero trust swiss army knife for working with X509, OAuth, JWT, OATH OTP, etc 
 
@@ -79,6 +79,9 @@ install -D -m 0644 autocomplete/fish_autocomplete   %{buildroot}%{_datadir}/fish
 %{_datadir}/fish/vendor_completions.d/%{name}.fish
 
 %changelog
+* Sun Jun 16 2024 Johan Kok <johan@fedoraproject.org> - 0.26.1-1
+- Bumped to 0.26.2
+
 * Mon May 06 2024 Johan Kok <johan@fedoraproject.org> - 0.26.1-1
 - Bumped to 0.26.1
 
