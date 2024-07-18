@@ -1,5 +1,5 @@
 Name:          step-cli
-Version:       0.27.1
+Version:       0.27.2
 Release:       1%{?dist}
 Summary:       A zero trust swiss army knife for working with X509, OAuth, JWT, OATH OTP, etc 
 
