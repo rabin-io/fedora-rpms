@@ -39,5 +39,5 @@ jobs:
         run: |
           for FILE in ${ALL_CHANGED_AND_MODIFIED_FILES}; do
             echo "Spec file $file was changed"
-            printf "${COPR_WEBHOOK}" "${FILE}" | xargs -r -I{} curl -X POST "{}"
+            printf "${COPR_WEBHOOK}/${FILE}/" | tr -d ' ' | xargs -tr -I{} curl -X POST "{}"
           done
